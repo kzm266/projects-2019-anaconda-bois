@@ -24,7 +24,7 @@ Endnu_pænere = Pænt[['År','Disp. indkomst mænd','Disp. indkomst kvinder']]
 #Funktion der giver forskellen i pct.
 def f(x):
     return (x['Disp. indkomst kvinder']/x['Disp. indkomst mænd']-1)*100
-Endnu_pænere['Forskel']=Endnu_pænere.apply(f, axis=1)
+Endnu_pænere['Forskel i %']=Endnu_pænere.apply(f, axis=1)
 Endnu_pænere.loc['Hele landet'].head()
 #Eksempel på at finde tal fra København
 København = Endnu_pænere.loc['København']
@@ -40,9 +40,11 @@ plt.grid(True)
 plt.show()
 
 
-def standard(mu, sigma):
-    """Creates a standard normal distribution, where you can choose your own mean and variation"""
+def standard(mu,sigma): 
+    #Laver normalfordeling   
     s = np.random.normal(mu, sigma, 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
     plt.plot(bins, 1/(sigma *np.sqrt(2*np.pi)) * np.exp(-(bins-mu)**2 / (2 * sigma**2)), linewidth = 2)
     return plt.show
+
+standard(0,1)
