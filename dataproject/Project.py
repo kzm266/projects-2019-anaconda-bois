@@ -32,7 +32,7 @@ København = Endnu_pænere.loc['København']
 Hele_Landet = Endnu_pænere.loc['Hele landet']
 
 #Fed graf
-plt.plot(København['År'],København['Forskel'])
+plt.plot(København['År'],København['Forskel i %'])
 plt.xlabel('År')
 plt.ylabel('Procentvis forskel')
 plt.title('Forskel i disponibel indkomst for København')
