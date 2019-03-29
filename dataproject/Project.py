@@ -24,7 +24,7 @@ Endnu_pænere = Pænt[['År','Disp. indkomst mænd','Disp. indkomst kvinder']]
 #Funktion der giver forskellen i pct.
 def f(x):
     return (x['Disp. indkomst kvinder']/x['Disp. indkomst mænd']-1)*100
-Endnu_pænere['Forskel i %']=Endnu_pænere.apply(f, axis=1)
+Endnu_pænere['Forskel']=Endnu_pænere.apply(f, axis=1)
 Endnu_pænere.loc['Hele landet'].head()
 #Eksempel på at finde tal fra København
 København = Endnu_pænere.loc['København']
@@ -47,4 +47,11 @@ def standard(mu,sigma):
     plt.plot(bins, 1/(sigma *np.sqrt(2*np.pi)) * np.exp(-(bins-mu)**2 / (2 * sigma**2)), linewidth = 2)
     return plt.show
 
-standard(0,1)
+#Finder normalfordelingen for København og hele landet:
+København.mean()
+København.std()
+Hele_Landet.mean()
+Hele_Landet.std()
+plt.show(standard(205228.58, 16782.75), standard(214377.2, 82925.37))
+
+
