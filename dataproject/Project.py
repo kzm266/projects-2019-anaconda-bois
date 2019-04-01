@@ -7,14 +7,14 @@ Dst = pydst.Dst(lang='en')
 Dst.get_data(table_id='INDKP101')
 Vars = Dst.get_variables(table_id='INDKP101')
 
-Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['*'], 'KOEN':['M','K'], 'TID':['*'], 'INDKOMSTTYPE':['100']})
+Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['*'], 'KOEN':['M','K'], 'TID':['*'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
 #Changing the index to AREA:
-New_index = Everything.set_index('OMRÅDE')
+New_index = Everything.set_index('Municipality')
 #Picking out the neccesary variables:
 Sortet = New_index[['TID','KOEN','INDHOLD']].rename(columns={'KOEN':'Gender', 'TID':'Year', 'INDHOLD':'Disposal income'})
 #Making a table for each gender:
-Men = Sortet[Sortet['Gender']=='Men'].sort_values(['OMRÅDE','Year']).rename(columns={'Disposal income':'Disposal income men'})
-Women = Sortet[Sortet['Gender']=='Women'].sort_values(['OMRÅDE', 'Year']).rename(columns={'Disposal income':'Disposal income women'})
+Men = Sortet[Sortet['Gender']=='Men'].sort_values(['Municipality','Year']).rename(columns={'Disposal income':'Disposal income men'})
+Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'Disposal income':'Disposal income women'})
 #We don't want year to appear twice when we concat:
 Women_without_year = Women[['Gender', 'Disposal income women']]
 #Concatenate the two tables:
