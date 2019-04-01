@@ -40,8 +40,8 @@ plt.grid(True)
 plt.show()
 
 
-def standard(mu,sigma): 
-    #Laver normalfordeling   
+def standard(mu, sigma):
+    """Creates a standard normal distribution, where you can choose your own mean and variation"""
     s = np.random.normal(mu, sigma, 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
     plt.plot(bins, 1/(sigma *np.sqrt(2*np.pi)) * np.exp(-(bins-mu)**2 / (2 * sigma**2)), linewidth = 2)
