@@ -1,3 +1,3 @@
 # Dataproject
 
-Should contain a short introduction to your project, and show how to produce your results.
+In this dataproject, we import data from Statestikbanken on disposable income on the municipal level. Further, we calculate the difference between disposable income for men and women, and present our findings and hypothesis graphically. Afterwards, we examine the differences in disposable income for men and women, with respect to the differences in pre-taxed income for men and women. Finally, our findings are presented graphically, and commented.   
