@@ -4,9 +4,15 @@ import pandas as pd
 import pydst
 import matplotlib.pyplot as plt
 
+#We use pydst to use an API to Denmark's statistics
 Dst = pydst.Dst(lang='en')
 Dst.get_data(table_id='INDKP101')
 Vars = Dst.get_variables(table_id='INDKP101')
+
+#To find the variables we need, we inspect the table that we have importet:
+Vars.values
+
+#After picking out values, we can get our data:
 Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['000','01','02','03','04','05','06','07','08','09','10','11'], 'KOEN':['M','K'], 'TID':['*'], 'ENHED':['116'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
 
 #Changing the index to Municipality:
@@ -33,6 +39,8 @@ Final_table
 def f(x):
     """Gives the procentual difference between the genders"""
     return (x['Disposal income men']/x['Disposal income women']-1)*100
+
+#Applying the function to the end of the table:
 Final_table['Difference in %']=Final_table.apply(f, axis=1)
 
 #Example on finding the numbers for All Denmark:
