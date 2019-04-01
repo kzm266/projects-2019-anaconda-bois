@@ -10,7 +10,7 @@ Dst.get_data(table_id='INDKP101')
 Vars = Dst.get_variables(table_id='INDKP101')
 
 #To find the variables we need, we inspect the table that we have importet:
-Vars.values
+print(Vars.values)
 
 #After picking out values, we can get our data:
 Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['000','01','02','03','04','05','06','07','08','09','10','11'], 'KOEN':['M','K'], 'TID':['*'], 'ENHED':['116'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
