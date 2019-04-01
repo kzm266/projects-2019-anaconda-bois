@@ -52,10 +52,3 @@ def standard_for_women(Municipality):
     count, bins, ignored = plt.hist(s, 30, density=True)
     plt.plot(bins, 1/(Municipality['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income women'].mean())**2 / (2 * Municipality['Disposal income women'].std()**2)), linewidth = 2)
     return plt.show
-
-#Finding the normal distribution for Copenhagen and all Denmark:
-Copenhagen.mean()
-Copenhagen.std()
-Whole_country.mean()
-Whole_country.std()
-plt.show(standard(205228.58, 16782.75), standard(214377.2, 82925.37))
