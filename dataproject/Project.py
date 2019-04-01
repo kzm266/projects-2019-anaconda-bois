@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 Dst = pydst.Dst(lang='en')
 Dst.get_data(table_id='INDKP101')
 Vars = Dst.get_variables(table_id='INDKP101')
-Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['000','11'], 'KOEN':['M','K'], 'TID':['*'], 'ENHED':['116'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
+Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['000','01','02','03','04','05','06','07','08','09','10','11'], 'KOEN':['M','K'], 'TID':['*'], 'ENHED':['116'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
 #Changing the index to Municipality:
 New_index = Everything.set_index('Municipality')
 #Picking out the neccesary variables:
@@ -29,7 +29,6 @@ Final_table['Difference in %']=Final_table.apply(f, axis=1)
 Final_table.loc['All Denmark'].head()
 #Example on finding the numbers for All Denmark:
 Whole_country = Final_table.loc['All Denmark']
-Final_table['Province']
 
 #Nice graf
 plt.plot(Whole_country['Year'],Whole_country['Difference in %'])
@@ -39,6 +38,21 @@ plt.title('Difference in disposal income for all Denmark')
 plt.grid(True)
 plt.show()
 
+Final_table[Final_table['Year']==2017]
+
+#Makes all the provinces to variables:
+All_Denmark = Final_table.loc['All Denmark']
+Province_Bornholm = Final_table.loc['Province Bornholm']
+Province_CityOfCopenhagen = Final_table.loc['Province Byen København']
+Province_Fyn = Final_table.loc['Province Fyn']
+Province_GreaterCopenhagen = Final_table.loc['Province Københavns omegn']
+Province_NorthernJylland = Final_table.loc['Province Nordjylland']
+Province_NorthernSjælland = Final_table.loc['Province Nordsjælland']
+Province_SouthJylland = Final_table.loc['Province Sydjylland']
+Province_West_and_SouthSjælland = Final_table.loc['Province Vest- og Sydsjælland']
+Province_WestJylland = Final_table.loc['Province Vestjylland']
+Province_EastJylland = Final_table.loc['Province Østjylland']
+Province_EastSjælland = Final_table.loc['Province Østsjælland']
 
 Copenhagen = Final_table.loc['Copenhagen']
 def standard_for_men(Municipality):
@@ -55,4 +69,26 @@ def standard_for_women(Municipality):
     plt.plot(bins, 1/(Municipality['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income women'].mean())**2 / (2 * Municipality['Disposal income women'].std()**2)), linewidth = 2)
     return plt.show
 
+standard_for_men(Province_Bornholm)
+plt.show(standard_for_men(Province_Bornholm),standard_for_women(Province_Bornholm))
 
+
+def standard_for_all(Municipality):
+    plt.subplot(2,1,1)
+    s = np.random.normal(Municipality['Disposal income men'].mean(), Municipality['Disposal income men'].std(), 10000)
+    count, bins, ignored = plt.hist(s, 30, density=True)
+    plt.plot(bins, 1/(Municipality['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income men'].mean())**2 / (2 * Municipality['Disposal income men'].std()**2)), linewidth = 2, label=Municipality['Disposal income men'].std())
+    plt.title('Men')
+    plt.xlabel('Disposal income')
+    plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
+    plt.subplot(2,1,2)
+    s = np.random.normal(Municipality['Disposal income women'].mean(), Municipality['Disposal income women'].std(), 10000)
+    count, bins, ignored = plt.hist(s, 30, density=True)
+    plt.plot(bins, 1/(Municipality['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income women'].mean())**2 / (2 * Municipality['Disposal income women'].std()**2)), linewidth = 2, label=Municipality['Disposal income women'].std())
+    plt.title('Women')
+    plt.xlabel('Disposal income')
+    plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
+    plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
+       
+    return plt.show
+standard_for_all(Province_Bornholm)
