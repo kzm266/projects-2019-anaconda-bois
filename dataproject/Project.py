@@ -8,7 +8,7 @@ Dst.get_data(table_id='INDKP101')
 Vars = Dst.get_variables(table_id='INDKP101')
 
 Everything = Dst.get_data(table_id = 'INDKP101', variables={'OMRÅDE':['*'], 'KOEN':['M','K'], 'TID':['*'], 'INDKOMSTTYPE':['100']}).rename(columns={'OMRÅDE':'Municipality'})
-#Changing the index to AREA:
+#Changing the index to Municipality:
 New_index = Everything.set_index('Municipality')
 #Picking out the neccesary variables:
 Sortet = New_index[['TID','KOEN','INDHOLD']].rename(columns={'KOEN':'Gender', 'TID':'Year', 'INDHOLD':'Disposal income'})
@@ -39,11 +39,18 @@ plt.grid(True)
 plt.show()
 
 
-def standard(mu, sigma):
-    """Creates a standard normal distribution, where you can choose your own mean and variation"""
-    s = np.random.normal(mu, sigma, 10000)
+def standard_for_men(Municipality):
+    """Creates a standard normal distribution for men's disposal income in the chosen municipality"""
+    s = np.random.normal(Municipality['Disposal income men'].mean(), Municipality['Disposal income men'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
-    plt.plot(bins, 1/(sigma *np.sqrt(2*np.pi)) * np.exp(-(bins-mu)**2 / (2 * sigma**2)), linewidth = 2)
+    plt.plot(bins, 1/(Municipality['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income men'].mean())**2 / (2 * Municipality['Disposal income men'].std()**2)), linewidth = 2)
+    return plt.show
+
+def standard_for_women(Municipality):
+    """Creates a standard normal distribution for women's disposal income in the chosen municipality"""
+    s = np.random.normal(Municipality['Disposal income women'].mean(), Municipality['Disposal income women'].std(), 10000)
+    count, bins, ignored = plt.hist(s, 30, density=True)
+    plt.plot(bins, 1/(Municipality['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income women'].mean())**2 / (2 * Municipality['Disposal income women'].std()**2)), linewidth = 2)
     return plt.show
 
 #Finding the normal distribution for Copenhagen and all Denmark:
