@@ -37,14 +37,15 @@ Final_table['Difference in %']=Final_table.apply(f, axis=1)
 
 #Example on finding the numbers for All Denmark:
 Whole_country = Final_table.loc['All Denmark']
-print(Whole_country)
+print(Whole_country.head())
 
 #We can show this in a graph like this:
 def Difference(Region):
+    #Simply plotting the difference against years to see the evolution
     plt.plot(Region['Year'],Region['Difference in %'])
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
-    plt.title('Difference in disposal income for all Denmark')
+    plt.title('Difference in disposal income')
     plt.grid(True)
     return plt.show()
 Difference(Whole_country)
@@ -63,23 +64,40 @@ Province_WestJylland = Final_table.loc['Province Vestjylland']
 Province_EastJylland = Final_table.loc['Province Østjylland']
 Province_EastSjælland = Final_table.loc['Province Østsjælland']
 
-
-def standard_for_all(Municipality):
+#To compare the genders visually, we create two standard normal distributions where the standard deviation is shown in the legend:
+def standard(Region):
+    #Making subplots to be shown in the same figure:
     plt.subplot(2,1,1)
-    s = np.random.normal(Municipality['Disposal income men'].mean(), Municipality['Disposal income men'].std(), 10000)
+    
+    #Creating the normal distribution:
+    s = np.random.normal(Region['Disposal income men'].mean(), Region['Disposal income men'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
-    plt.plot(bins, 1/(Municipality['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income men'].mean())**2 / (2 * Municipality['Disposal income men'].std()**2)), linewidth = 2, label=Municipality['Disposal income men'].std())
+    
+    #Plotting the distribution:
+    plt.plot(bins, 1/(Region['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Region['Disposal income men'].mean())**2 / (2 * Region['Disposal income men'].std()**2)), linewidth = 2, label=Region['Disposal income men'].std())
+    
+    #Some formal stuff
     plt.title('Men')
     plt.xlabel('Disposal income')
     plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
+    
+    #The other subplot:
     plt.subplot(2,1,2)
-    s = np.random.normal(Municipality['Disposal income women'].mean(), Municipality['Disposal income women'].std(), 10000)
+    
+    #Creating the normal distribution:
+    s = np.random.normal(Region['Disposal income women'].mean(), Region['Disposal income women'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
-    plt.plot(bins, 1/(Municipality['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Municipality['Disposal income women'].mean())**2 / (2 * Municipality['Disposal income women'].std()**2)), linewidth = 2, label=Municipality['Disposal income women'].std())
+   
+   #Plotting the distribution:
+    plt.plot(bins, 1/(Region['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Region['Disposal income women'].mean())**2 / (2 * Region['Disposal income women'].std()**2)), linewidth = 2, label=Region['Disposal income women'].std())
+    
+    #Formal figure stuff again
     plt.title('Women')
     plt.xlabel('Disposal income')
     plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
     return plt.show
-standard_for_all(Province_Bornholm)
+
+#We can now see the two normal distributions in the same figure, with the standard deviation in the legend:
+standard(Province_Bornholm)
