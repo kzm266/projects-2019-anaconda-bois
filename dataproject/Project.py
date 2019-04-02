@@ -77,7 +77,7 @@ def standard(Region):
     #Making subplots to be shown in the same figure:
     plt.subplot(2,1,1)
     
-    #Creating the normal distribution:
+    #Creating the normal distribution for the men:
     s = np.random.normal(Region['Disposal income men'].mean(), Region['Disposal income men'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
     
@@ -92,7 +92,7 @@ def standard(Region):
     #The other subplot:
     plt.subplot(2,1,2)
     
-    #Creating the normal distribution:
+    #Creating the normal distribution for the women:
     s = np.random.normal(Region['Disposal income women'].mean(), Region['Disposal income women'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
    
