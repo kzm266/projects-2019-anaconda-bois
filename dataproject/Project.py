@@ -44,8 +44,8 @@ def f(x):
 Final_table['Difference in %']=Final_table.apply(f, axis=1)
 
 #Example on finding the numbers for All Denmark:
-Whole_country = Final_table.loc['All Denmark']
-print(Whole_country.head())
+All_Denmark = Final_table.loc['All Denmark']
+print(All_Denmark.head())
 
 #We can show this in a graph like this:
 def Difference(Region):
@@ -56,10 +56,20 @@ def Difference(Region):
     plt.title('Difference in disposal income')
     plt.grid(True)
     return plt.show()
-Difference(Whole_country)
+Difference(All_Denmark)
+
+
+unik = Final_table.index.unique()
+unik
+Province_ = globals()
+liste = []
+for i in unik:
+    liste.append(Final_table.loc[i].index.unique())
+liste
+
+standard(liste[1])
 
 #Makes all the provinces to variables for later use:
-All_Denmark = Final_table.loc['All Denmark']
 Province_Bornholm = Final_table.loc['Province Bornholm']
 Province_CityOfCopenhagen = Final_table.loc['Province Byen København']
 Province_Fyn = Final_table.loc['Province Fyn']
@@ -74,6 +84,7 @@ Province_EastSjælland = Final_table.loc['Province Østsjælland']
 
 #To compare the genders visually, we create two standard normal distributions where the standard deviation is shown in the legend:
 def standard(Region):
+    """Makes two normal distributions to show the mean and standard deviation for both genders"""
     #Making subplots to be shown in the same figure:
     plt.subplot(2,1,1)
     
@@ -108,4 +119,4 @@ def standard(Region):
     return plt.show
 
 #We can now see the two normal distributions in the same figure, with the standard deviation in the legend:
-standard(Province_Bornholm)
+standard(Province_Fyn)
