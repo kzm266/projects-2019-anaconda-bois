@@ -57,6 +57,7 @@ def Difference(Region):
     plt.grid(True)
     return plt.show()
 Difference(All_Denmark)
+f
 
 
 unik = Final_table.index.unique()
