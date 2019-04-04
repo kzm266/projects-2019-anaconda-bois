@@ -50,74 +50,59 @@ print(All_Denmark.head())
 #We can show this in a graph like this:
 def Difference(Region):
     #Simply plotting the difference against years to see the evolution
-    plt.plot(Region['Year'],Region['Difference in %'])
+    plt.plot(d[Region]['Year'],d[Region]['Difference in %'])
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
     plt.title('Difference in disposal income')
     plt.grid(True)
     return plt.show()
-Difference(All_Denmark)
-f
 
-
+#Finding the unique values in the table AKA all the provinces
 unik = Final_table.index.unique()
-unik
-Province_ = globals()
-liste = []
+
+#Making an empty dictionary which will contain our unique values with their seperate table later
+d = {}
+
+#Filling the empty dictionary
 for i in unik:
-    liste.append(Final_table.loc[i].index.unique())
-liste
+    d.update( {i : Final_table.loc[i]})
 
-standard(liste[1])
-
-#Makes all the provinces to variables for later use:
-Province_Bornholm = Final_table.loc['Province Bornholm']
-Province_CityOfCopenhagen = Final_table.loc['Province Byen København']
-Province_Fyn = Final_table.loc['Province Fyn']
-Province_GreaterCopenhagen = Final_table.loc['Province Københavns omegn']
-Province_NorthernJylland = Final_table.loc['Province Nordjylland']
-Province_NorthernSjælland = Final_table.loc['Province Nordsjælland']
-Province_SouthJylland = Final_table.loc['Province Sydjylland']
-Province_West_and_SouthSjælland = Final_table.loc['Province Vest- og Sydsjælland']
-Province_WestJylland = Final_table.loc['Province Vestjylland']
-Province_EastJylland = Final_table.loc['Province Østjylland']
-Province_EastSjælland = Final_table.loc['Province Østsjælland']
 
 #To compare the genders visually, we create two standard normal distributions where the standard deviation is shown in the legend:
 def standard(Region):
-    """Makes two normal distributions to show the mean and standard deviation for both genders"""
+    
     #Making subplots to be shown in the same figure:
     plt.subplot(2,1,1)
     
     #Creating the normal distribution for the men:
-    s = np.random.normal(Region['Disposal income men'].mean(), Region['Disposal income men'].std(), 10000)
+    s = np.random.normal(d[Region]['Disposal income men'].mean(), d[Region]['Disposal income men'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
     
     #Plotting the distribution:
-    plt.plot(bins, 1/(Region['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Region['Disposal income men'].mean())**2 / (2 * Region['Disposal income men'].std()**2)), linewidth = 2, label=Region['Disposal income men'].std())
+    plt.plot(bins, 1/(d[Region]['Disposal income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['Disposal income men'].mean())**2 / (2 * d[Region]['Disposal income men'].std()**2)), linewidth = 4)
     
     #Some formal stuff
     plt.title('Men')
     plt.xlabel('Disposal income')
-    plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
+    plt.axis([0,300000,0,0.000011])
     
     #The other subplot:
     plt.subplot(2,1,2)
     
     #Creating the normal distribution for the women:
-    s = np.random.normal(Region['Disposal income women'].mean(), Region['Disposal income women'].std(), 10000)
+    s = np.random.normal(d[Region]['Disposal income women'].mean(), d[Region]['Disposal income women'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
    
    #Plotting the distribution:
-    plt.plot(bins, 1/(Region['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-Region['Disposal income women'].mean())**2 / (2 * Region['Disposal income women'].std()**2)), linewidth = 2, label=Region['Disposal income women'].std())
+    plt.plot(bins, 1/(d[Region]['Disposal income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['Disposal income women'].mean())**2 / (2 * d[Region]['Disposal income women'].std()**2)), linewidth = 4)
     
     #Formal figure stuff again
     plt.title('Women')
     plt.xlabel('Disposal income')
-    plt.legend(bbox_to_anchor=(1.05,1),loc = 5, borderaxespad=0)
+    plt.axis([0,300000,0,0.000011])
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
-    return plt.show
+    return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['Disposal income men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['Disposal income men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['Disposal income women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['Disposal income women'].std()))
 
 #We can now see the two normal distributions in the same figure, with the standard deviation in the legend:
-standard(Province_Fyn)
+standard('Province Fyn')
