@@ -115,5 +115,4 @@ def growth(Region):
     plt.ylabel('Disposable income')
     plt.gca().legend(('Men', 'Women'))
     plt.title(f'{str(Region)}')
-
     return plt.show()
