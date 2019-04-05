@@ -43,7 +43,7 @@ Final_table = Concatenated_table[['Year','disposable income men','disposable inc
 #Creates a function with provides the difference between the genders in %:
 def f(x):
     """Gives the procentual difference between the genders"""
-    return (x['disposable income men']/x['disposable income women']-1)*100
+    return round((x['disposable income men']/x['disposable income women']-1)*100, 2)
 
 #Applying the function to the end of the table:
 Final_table['Difference in %']=Final_table.apply(f, axis=1)
@@ -71,7 +71,7 @@ def Difference(Region):
     return plt.show()
 
 
-#To compare the genders visually, we create two standard normal distributions where the standard deviation is shown in the legend:
+#To compare the genders visually, we create two standard normal distributions:
 def standard(Region):
     
     #Making subplots to be shown in the same figure:
