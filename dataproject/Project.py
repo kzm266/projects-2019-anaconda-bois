@@ -86,7 +86,7 @@ def standard(Region):
     plt.plot(bins, 1/(d[Region]['disposable income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable income men'].mean())**2 / (2 * d[Region]['disposable income men'].std()**2)), linewidth = 4)
     
     #Some formal stuff
-    plt.title('Men')
+    plt.title(f'Men in {str(Region)}')
     plt.xlabel('disposable income')
     plt.axis([0,300000,0,0.000011])
     
@@ -101,7 +101,7 @@ def standard(Region):
     plt.plot(bins, 1/(d[Region]['disposable income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable income women'].mean())**2 / (2 * d[Region]['disposable income women'].std()**2)), linewidth = 4)
     
     #Formal figure stuff again
-    plt.title('Women')
+    plt.title(f'Women in {str(Region)}')
     plt.xlabel('disposable income')
     plt.axis([0,300000,0,0.000011])
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
