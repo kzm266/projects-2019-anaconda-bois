@@ -107,3 +107,12 @@ def normal(Region):
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
     return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['disposable income men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['disposable income women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income women'].std()))
+
+def growth(Region):
+    plt.plot(d[Region]['Year'], d[Region]['disposable income men'], label = 'Men')
+    plt.plot(d[Region]['Year'], d[Region]['disposable income women'], label = 'Women')
+    plt.ylabel('Disposable income')
+    plt.gca().legend(('Men', 'Women'))
+    plt.title(f'{str(Region)}')
+
+    return plt.show()
