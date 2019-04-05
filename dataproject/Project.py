@@ -87,7 +87,7 @@ def normal(Region):
     
     #Some formal stuff
     plt.title(f'Men in {str(Region)}')
-    plt.xlabel('disposable income')
+    plt.xlabel('Disposable income')
     plt.axis([0,300000,0,0.000011])
     
     #The other subplot:
@@ -102,7 +102,7 @@ def normal(Region):
     
     #Formal figure stuff again
     plt.title(f'Women in {str(Region)}')
-    plt.xlabel('disposable income')
+    plt.xlabel('Disposable income')
     plt.axis([0,300000,0,0.000011])
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
