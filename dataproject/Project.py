@@ -108,6 +108,7 @@ def normal(Region):
        
     return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['disposable income men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['disposable income women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income women'].std()))
 
+#Graph that shows the growth in disposable income over the years
 def growth(Region):
     plt.plot(d[Region]['Year'], d[Region]['disposable income men'], label = 'Men')
     plt.plot(d[Region]['Year'], d[Region]['disposable income women'], label = 'Women')
