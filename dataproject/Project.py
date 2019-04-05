@@ -72,8 +72,8 @@ def Difference(Region):
     return plt.show()
 
 
-#To compare the genders visually, we create two standard normal distributions:
-def standard(Region):
+#To compare the genders visually, we create two normal distributions:
+def normal(Region):
     
     #Making subplots to be shown in the same figure:
     plt.subplot(2,1,1)
@@ -107,6 +107,3 @@ def standard(Region):
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
     return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['disposable income men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['disposable income women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income women'].std()))
-
-#We can now see the two normal distributions in the same figure, with the mean and standard deviation shown below:
-standard('Province Fyn')
