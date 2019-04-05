@@ -67,6 +67,7 @@ def Difference(Region):
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
     plt.title(f'Difference in disposable income for {str(Region)}')
+    plt.axis([1986,2018,9,32.5])
     plt.grid(True)
     return plt.show()
 
