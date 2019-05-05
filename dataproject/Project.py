@@ -24,8 +24,8 @@ New_index = Everything.set_index('Municipality')
 Sortet = New_index[['TID','KOEN','INDHOLD']].rename(columns={'KOEN':'Gender', 'TID':'Year', 'INDHOLD':'disposable income'})
 
 #Making a table for each gender:
-Men = Sortet[Sortet['Gender']=='Men'].sort_values(['Municipality','Year']).rename(columns={'disposable income':'disposable income men'})
-Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'disposable income':'disposable incom women'})
+Men = Sortet[Sortet['Gender']=='Men'].sort_values(['Municipality','Year']).rename(columns={'disposable income':'disposable_income_men'})
+Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'disposable income':'disposable_income_women'})
 
 #We don't want year to appear twice when we concat:
 Women_without_year = Women[['Gender', 'women']]
