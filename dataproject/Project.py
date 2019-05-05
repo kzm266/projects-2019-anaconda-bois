@@ -25,16 +25,16 @@ Sortet = New_index[['TID','KOEN','INDHOLD']].rename(columns={'KOEN':'Gender', 'T
 
 #Making a table for each gender:
 Men = Sortet[Sortet['Gender']=='Men'].sort_values(['Municipality','Year']).rename(columns={'disposable income':'disposable income men'})
-Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'disposable income':'disposable income women'})
+Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'disposable income':'disposable incom women'})
 
 #We don't want year to appear twice when we concat:
-Women_without_year = Women[['Gender', 'disposable income women']]
+Women_without_year = Women[['Gender', 'women']]
 
 #Concatenate the two tables:
 Concatenated_table = pd.concat([Men, Women_without_year], axis=1)
 
 #Removing the gender nicer look:
-Final_table = Concatenated_table[['Year','disposable income men','disposable income women']]
+Final_table = Concatenated_table[['Year','disposable_income_men','disposable_income_women']]
 
 #DATACLEANING COMPLETE#
 
@@ -43,7 +43,7 @@ Final_table = Concatenated_table[['Year','disposable income men','disposable inc
 #Creates a function with provides the difference between the genders in %:
 def f(x):
     """Gives the procentual difference between the genders"""
-    return round((x['disposable income men']/x['disposable income women']-1)*100, 2)
+    return round((x['disposable_income_men']/x['disposable_income_women']-1)*100, 2)
 
 #Applying the function to the end of the table:
 Final_table['Difference in %']=Final_table.apply(f, axis=1)
@@ -66,7 +66,7 @@ def Difference(Region):
     plt.plot(d[Region]['Year'],d[Region]['Difference in %'])
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
-    plt.title(f'Difference in disposable income for {str(Region)}')
+    plt.title(f'Difference in disposable_income for {str(Region)}')
     plt.axis([1986,2018,9,32.5])
     plt.grid(True)
     return plt.show()
@@ -79,11 +79,11 @@ def normal(Region):
     plt.subplot(2,1,1)
     
     #Creating the normal distribution for the men:
-    s = np.random.normal(d[Region]['disposable income men'].mean(), d[Region]['disposable income men'].std(), 10000)
+    s = np.random.normal(d[Region]['disposable_income_men'].mean(), d[Region]['disposable_income_men'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
     
     #Plotting the distribution:
-    plt.plot(bins, 1/(d[Region]['disposable income men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable income men'].mean())**2 / (2 * d[Region]['disposable income men'].std()**2)), linewidth = 4)
+    plt.plot(bins, 1/(d[Region]['disposable_income_men'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable_income_men'].mean())**2 / (2 * d[Region]['disposable_income_men'].std()**2)), linewidth = 4)
     
     #Some formal stuff
     plt.title(f'Men in {str(Region)}')
@@ -94,11 +94,11 @@ def normal(Region):
     plt.subplot(2,1,2)
     
     #Creating the normal distribution for the women:
-    s = np.random.normal(d[Region]['disposable income women'].mean(), d[Region]['disposable income women'].std(), 10000)
+    s = np.random.normal(d[Region]['disposable_income_women'].mean(), d[Region]['disposable_income_women'].std(), 10000)
     count, bins, ignored = plt.hist(s, 30, density=True)
    
    #Plotting the distribution:
-    plt.plot(bins, 1/(d[Region]['disposable income women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable income women'].mean())**2 / (2 * d[Region]['disposable income women'].std()**2)), linewidth = 4)
+    plt.plot(bins, 1/(d[Region]['disposable_income_women'].std() *np.sqrt(2*np.pi)) * np.exp(-(bins-d[Region]['disposable_income_women'].mean())**2 / (2 * d[Region]['disposable_income_women'].std()**2)), linewidth = 4)
     
     #Formal figure stuff again
     plt.title(f'Women in {str(Region)}')
@@ -106,12 +106,12 @@ def normal(Region):
     plt.axis([0,300000,0,0.000011])
     plt.subplots_adjust(top=2, bottom=0, left=0, right=1, hspace=0.2)
        
-    return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['disposable income men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['disposable income women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable income women'].std()))
+    return plt.show(), print('For men, the mean is ','{0:.0f}'.format(d[Region]['disposable_income_men'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable_income_men'].std())), print('For women, the mean is ','{0:.0f}'.format(d[Region]['disposable_income_women'].mean()), 'and the standard deviation is ','{0:.0f}'.format(d[Region]['disposable_income_women'].std()))
 
 #Graph that shows the growth in disposable income over the years
 def growth(Region):
-    plt.plot(d[Region]['Year'], d[Region]['disposable income men'], label = 'Men')
-    plt.plot(d[Region]['Year'], d[Region]['disposable income women'], label = 'Women')
+    plt.plot(d[Region]['Year'], d[Region]['disposable_income_men'], label = 'Men')
+    plt.plot(d[Region]['Year'], d[Region]['disposable_income_women'], label = 'Women')
     plt.ylabel('Disposable income')
     plt.gca().legend(('Men', 'Women'))
     plt.title(f'{str(Region)}')
