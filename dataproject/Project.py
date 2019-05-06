@@ -3,8 +3,6 @@ import numpy as np
 import pandas as pd
 import pydst
 import matplotlib.pyplot as plt
-from ipywidgets import interact, interactive, fixed, interact_manual
-import ipywidgets as widgets
 
 #DATACLEANING#
 
