@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import pydst
 import matplotlib.pyplot as plt
+import ipywidgets as widgets
 
 #DATACLEANING#
 
