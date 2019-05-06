@@ -30,7 +30,7 @@ Men = Sortet[Sortet['Gender']=='Men'].sort_values(['Municipality','Year']).renam
 Women = Sortet[Sortet['Gender']=='Women'].sort_values(['Municipality', 'Year']).rename(columns={'disposable income':'disposable_income_women'})
 
 #We don't want year to appear twice when we concat:
-Women_without_year = Women[['Gender']]
+Women_without_year = Women[['Gender', 'disposable_income_women']]
 
 #Concatenate the two tables:
 Concatenated_table = pd.concat([Men, Women_without_year], axis=1)
