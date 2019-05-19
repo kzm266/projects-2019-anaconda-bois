@@ -31,12 +31,6 @@ Men = Sortet_mun[Sortet_mun['Gender']=='Men'].sort_values(['Municipality','Year'
 
 Women = Sortet_mun[Sortet_mun['Gender']=='Women'].sort_values(['Municipality', 'Year','Edulvl']).rename(columns={'disposable income':'disposable_income_women'})
 
-#Merge tables
-#merged_table = pd.merge(Men, Women, on=['Year','Edulvl', 'Municipality'], how='outer')
-
-#Final
-#Final_table = 
-
 #We don't want year to appear twice when we concat:
 Women_without_year = Women[['Gender', 'disposable_income_women']]
 
@@ -44,7 +38,7 @@ Women_without_year = Women[['Gender', 'disposable_income_women']]
 Concatenated_table = pd.concat([Men, Women_without_year], axis=1)
 
 #Remove gender
-Final_table = Concatenated_table[['Edulvl','disposable_income_men','disposable_income_women']]
+Final_table = Concatenated_table[['Year','Edulvl','disposable_income_men','disposable_income_women']]
 
 #TEST
 
@@ -59,6 +53,7 @@ Final_table['Difference in %']=Final_table.apply(f, axis=1)
 #We now wish to create a individual table for each province, and do it like this:
 #We start by finding the unique values in the table AKA all the provinces
 unik_mun = Final_table.index.unique()
+unik_edu = Final_table.Edulvl.unique()
 
 #DET ENESTE DER SKAL OPDATERES ER EN DIC DER PASSER MED BÅDE MUN OG EDU
 
@@ -66,8 +61,8 @@ unik_mun = Final_table.index.unique()
 d = {}
 
 #Filling the empty dictionary
-for i in unik:
-    d.update( {i : Final_table.loc[i]})
+for i in unik_mun and j in unik_edu:
+    d.update( {i and j : Final_table.loc[i,j]})
 
 
 #We can now plot the difference between men and women in a graph like this:
