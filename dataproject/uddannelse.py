@@ -27,9 +27,9 @@ Sortet_year = yearindex_all_data[['Municipality','Edulvl','Gender','disposable i
 
 
 #Genderspecific 
-Men = Sortet_mun[Sortet_mun['Gender']=='Men'].sort_values(['Municipality','Year','Edulvl']).rename(columns={'disposable income':'disposable_income_men'})
+Men = Sortet_year[Sortet_year['Gender']=='Men'].sort_values(['Municipality','Year','Edulvl']).rename(columns={'disposable income':'disposable_income_men'})
 
-Women = Sortet_mun[Sortet_mun['Gender']=='Women'].sort_values(['Municipality', 'Year','Edulvl']).rename(columns={'disposable income':'disposable_income_women'})
+Women = Sortet_year[Sortet_year['Gender']=='Women'].sort_values(['Municipality', 'Year','Edulvl']).rename(columns={'disposable income':'disposable_income_women'})
 
 #We don't want year to appear twice when we concat:
 Women_without_year = Women[['Gender', 'disposable_income_women']]
@@ -38,7 +38,7 @@ Women_without_year = Women[['Gender', 'disposable_income_women']]
 Concatenated_table = pd.concat([Men, Women_without_year], axis=1)
 
 #Remove gender
-Final_table = Concatenated_table[['Year','Edulvl','disposable_income_men','disposable_income_women']]
+Final_table = Concatenated_table[['Municipality','Edulvl','disposable_income_men','disposable_income_women']]
 
 #TEST
 
@@ -50,28 +50,37 @@ def f(x):
 #Applying the function to the end of the table:
 Final_table['Difference in %']=Final_table.apply(f, axis=1)
 
-#We now wish to create a individual table for each province, and do it like this:
-#We start by finding the unique values in the table AKA all the provinces
+Sortet_table = Final_table.sort_values(by=(["Municipality", "Edulvl"])).groupby("Year", as_index=True).first()
+
 unik_mun = Final_table.index.unique()
-unik_edu = Final_table.Edulvl.unique()
+d = {}
+
+for i in unik_mun:
+    d.update( {i : Final_table.loc[i]})
+
+def Difference(Region):
+    #Simply plotting the difference against years to see the evolution
+    plt.plot(d[Region]['Year'],d[Region]['Difference in %'])
+    plt.xlabel('Year')
+    plt.ylabel('Difference in %')
+    plt.title(f'Difference in disposable_income for {str(Region)}')
+    plt.axis([2004,2018,6,36])
+    plt.grid(True)
+    return plt.show()
+
+
+#We now wish to create a individual table for each province and education level, and do it like this:
+#We start by finding the unique values in the table AKA all the provinces and all the educationlevels
+
+#unik_edu = Final_table.Edulvl.unique()
+
 
 #DET ENESTE DER SKAL OPDATERES ER EN DIC DER PASSER MED BÅDE MUN OG EDU
 
 #Making an empty dictionary which will contain our unique values with their seperate table later
-d = {}
+
 
 #Filling the empty dictionary
-for i in unik_mun and j in unik_edu:
-    d.update( {i and j : Final_table.loc[i,j]})
 
 
 #We can now plot the difference between men and women in a graph like this:
-def Difference(Region, Edulvl):
-    #Simply plotting the difference against years to see the evolution
-    plt.plot(d[Region, Edulvl]['Year'],d[Region, Edulvl]['Difference in %'])
-    plt.xlabel('Year')
-    plt.ylabel('Difference in %')
-    plt.title(f'Difference in disposable_income for {str(Region, Edulvl)}')
-    plt.axis([2004,2018,9,32.5])
-    plt.grid(True)
-    return plt.show()
