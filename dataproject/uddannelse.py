@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pydst
 import matplotlib.pyplot as plt
-
+import itertools
 #DATACLEANING#
 
 #We use pydst to use an API to Denmark's statistics
@@ -38,35 +38,33 @@ Women_without_year = Women[['Gender', 'disposable_income_women']]
 Concatenated_table = pd.concat([Men, Women_without_year], axis=1)
 
 #Remove gender
-Final_table = Concatenated_table[['Municipality','Edulvl','disposable_income_men','disposable_income_women']]
+Final_table1 = Concatenated_table[['Municipality','Edulvl','disposable_income_men','disposable_income_women']]
+#Final_table = Final_table1().replace("10 BASIC SCHOOL 8-10 grade","BASIC SCHOOL 8-10 grade").replace("20+25 UPPER SECONDARY SCHOOL","UPPER SECONDARY SCHOOL").replace("35 VOCATIONAL EDUCATION","VOCATIONAL EDUCATION").replace("40 SHORT-CYCLE HIGHER EDUCATION","SHORT-CYCLE HIGHER EDUCATION").replace("50+60 MEDIUM-CYCLE HIGHER EDUCATION, BACHLEOR","MEDIUM-CYCLE HIGHER EDUCATION BACHLEOR").replace("65 LONG-CYCLE HIGHER EDUCATION","LONG-CYCLE HIGHER EDUCATION") 
 
-#TEST
+All = slice(None)
 
-#Creates a function with provides the difference between the genders in %:
+#Creates a function which provides the difference between the genders in %:
 def f(x):
     """Gives the procentual difference between the genders"""
     return round((x['disposable_income_men']/x['disposable_income_women']-1)*100, 2)
 
 #Applying the function to the end of the table:
-Final_table['Difference in %']=Final_table.apply(f, axis=1)
+Final_table1['Difference in %']=Final_table1.apply(f, axis=1)
 
-Sortet_table = Final_table.sort_values(by=(["Municipality", "Edulvl"])).groupby("Year", as_index=True).first()
 
-unik_mun = Final_table.index.unique()
-d = {}
-
-for i in unik_mun:
-    d.update( {i : Final_table.loc[i]})
-
-def Difference(Region):
+def Difference(Municipality,Edulvl):
     #Simply plotting the difference against years to see the evolution
-    plt.plot(d[Region]['Year'],d[Region]['Difference in %'])
+    #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True)
+    #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True).plot(by=[Municipality,Edulvl], y="Difference in %", legend=True)
+    pd.DataFrame(Final_table1).loc[("Municipality":Municipality)(Edulvl)].plot(by=[Municipality,Edulvl], y="Difference in %", legend=True)
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
-    plt.title(f'Difference in disposable_income for {str(Region)}')
-    plt.axis([2004,2018,6,36])
+    plt.title(f'Difference in disposable income for {str(Municipality)} with educationlevel {str(Edulvl)}')
+    plt.axis([2004,2018,5,45])
     plt.grid(True)
     return plt.show()
+
+
 
 
 #We now wish to create a individual table for each province and education level, and do it like this:
@@ -84,3 +82,5 @@ def Difference(Region):
 
 
 #We can now plot the difference between men and women in a graph like this:
+
+
