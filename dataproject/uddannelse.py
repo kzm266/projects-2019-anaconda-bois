@@ -55,12 +55,11 @@ Final_table1['Difference in %']=Final_table1.apply(f, axis=1)
 def Difference(Municipality,Edulvl):
     #Simply plotting the difference against years to see the evolution
     #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True)
-    #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True).plot(by=[Municipality,Edulvl], y="Difference in %", legend=True)
-    pd.DataFrame(Final_table1).loc[("Municipality":Municipality)(Edulvl)].plot(by=[Municipality,Edulvl], y="Difference in %", legend=True)
+    pd.DataFrame(Final_table1).groupby(by=["Municipality","Edulvl"], as_index=True).get_group((Municipality,Edulvl)).plot(by="Difference in %")
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
     plt.title(f'Difference in disposable income for {str(Municipality)} with educationlevel {str(Edulvl)}')
-    plt.axis([2004,2018,5,45])
+    plt.axis([2003,2018,0,50])
     plt.grid(True)
     return plt.show()
 
