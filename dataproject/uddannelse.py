@@ -52,14 +52,28 @@ def f(x):
 Final_table1['Difference in %']=Final_table1.apply(f, axis=1)
 
 
+Final_table1 = Final_table1.replace("10 BASIC SCHOOL 8-10 grade","BASIC SCHOOL 8-10 grade").replace("20+25 UPPER SECONDARY SCHOOL","UPPER SECONDARY SCHOOL").replace("35 VOCATIONAL EDUCATION","VOCATIONAL EDUCATION").replace("40 SHORT-CYCLE HIGHER EDUCATION","SHORT-CYCLE HIGHER EDUCATION").replace("50+60 MEDIUM-CYCLE HIGHER EDUCATION, BACHLEOR","MEDIUM-CYCLE HIGHER EDUCATION BACHLEOR").replace("65 LONG-CYCLE HIGHER EDUCATION","LONG-CYCLE HIGHER EDUCATION")
+
+
 def Difference(Municipality,Edulvl):
     #Simply plotting the difference against years to see the evolution
     #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True)
-    pd.DataFrame(Final_table1).groupby(by=["Municipality","Edulvl"], as_index=True).get_group((Municipality,Edulvl)).plot(by="Difference in %")
+    pd.DataFrame(Final_table1).groupby(by=["Municipality","Edulvl"], as_index=True).get_group((Municipality,Edulvl)).plot(by="Difference in %",y="Difference in %")
     plt.xlabel('Year')
     plt.ylabel('Difference in %')
     plt.title(f'Difference in disposable income for {str(Municipality)} with educationlevel {str(Edulvl)}')
-    plt.axis([2003,2018,0,50])
+    #plt.axis([2003,2018,0,50])
+    plt.grid(True)
+    return plt.show()
+
+def MenWomen(Municipality,Edulvl):
+    #Simply plotting the difference against years to see the evolution
+    #pd.DataFrame(Final_table1).groupby(["Municipality","Edulvl"], as_index=True)
+    pd.DataFrame(Final_table1).groupby(by=["Municipality","Edulvl"], as_index=True).get_group((Municipality,Edulvl)).plot(by="Difference in %",y=["disposable_income_men","disposable_income_women"])
+    plt.xlabel('Year')
+    plt.ylabel('Difference in %')
+    plt.title(f'Difference in disposable income for {str(Municipality)} with educationlevel {str(Edulvl)}')
+    #plt.axis([2003,2018,0,50])
     plt.grid(True)
     return plt.show()
 
